@@ -31,7 +31,6 @@
       margin: 20px auto;
     }
 
-    /* FIX: link is hidden by default properly */
     a {
       display: none;
       padding: 12px 20px;
@@ -104,6 +103,26 @@ const fakeShows = [
     img: "https://registration.edfringe.com/resource/image/82dfa7d6-10b5-466d-b68e-6b2faec0d356"
   },
   {
+ title: "Darren Gaffney: The Full Gaffney",
+    img: "https://registration.edfringe.com/resource/image/d6481f91-1887-4ac6-a256-d9e9d2681f12"
+  },
+  {
+ title: "Not Medically Accurate",
+    img: "https://registration.edfringe.com/resource/image/19090b59-3f57-430a-a017-a2bda58eb72e"
+  },
+  {
+ title: "Comedy for the Curious: 2026",
+    img: "https://registration.edfringe.com/resource/image/b17e25ec-d5dc-4d57-8134-41b8c398f30a"
+  },
+  {
+ title: "Jehovah's Witness for the Prosecution – Work in Progress",
+    img: "https://registration.edfringe.com/resource/image/ece0ec3f-4171-4dab-8da3-969f0b329aa7"
+  },
+  {
+ title: "Jason Byrne: 30 Years Byrning",
+    img: "https://registration.edfringe.com/resource/image/edca1314-b38f-431a-a6d8-bc39e9c3ec33"
+  },
+  {
     title: "Shakespeare for Kids",
     img: "https://registration.edfringe.com/resource/image/0263f8a0-96f1-46fa-87e8-d10c5c00f5f6"
   }
@@ -160,9 +179,13 @@ function spin() {
 
       let chosenIndex;
 
-      do {
-        chosenIndex = Math.floor(Math.random() * realShows.length);
-      } while (chosenIndex === lastShowIndex && realShows.length > 1);
+      if (realShows.length === 1) {
+        chosenIndex = 0;
+      } else {
+        do {
+          chosenIndex = Math.floor(Math.random() * realShows.length);
+        } while (chosenIndex === lastShowIndex);
+      }
 
       lastShowIndex = chosenIndex;
 
