@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Fringe Show Generator</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: black;
+      color: white;
+      padding: 40px;
+    }
+
+    #title {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    #showTitle {
+      font-size: 24px;
+      margin: 20px;
+    }
+
+    img {
+      max-width: 300px;
+      display: none;
+      margin: 20px auto;
+    }
+
+    a {
+      display: none;
+      padding: 10px 20px;
+      background: cyan;
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      background: cyan;
+      color: black;
+      font-weight: bold;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="title">🎭 Random Fringe Show Generator</div>
+
+<button id="playBtn">▶️ Play</button>
+
+<div id="showTitle">Press play to begin</div>
+
+<img id="showImage" />
+
+<br><br>
+
+<a id="ticketBtn" target="_blank">Get Tickets</a>
+
+<br><br>
+
+<button id="reloadBtn" style="display:none;">
+🔁 Bring me to another show
+</button>
+
+<script>
+const fakeShows = [
+  {
+    title: "90s Magic Throwback with Chris Fleming",
+    img: "https://registration.edfringe.com/resource/image/d44989bd-dbf5-4490-b42f-f4568174b173"
+  },
+  {
+    title: "Man Sings the Same Song Over and Over Again for an Hour",
+    img: "https://registration.edfringe.com/resource/image/7dad36f4-fde5-46b8-8a24-0f42c1626439"
+  },
+  {
+    title: "James Barr: Sorry I Hurt Your Son (Said My Ex to My Mum)",
+    img: "https://registration.edfringe.com/resource/image/3ca41ab5-6815-44d1-843a-632451aa6f8c"
+  },
+  {
+    title: "Tweedy's Massive Solo Show",
+    img: "https://registration.edfringe.com/resource/image/29434eb0-2517-4147-8607-1b077d041567"
+  },
+  {
+    title: "Superbowl Salsa",
+    img: "https://registration.edfringe.com/resource/image/82dfa7d6-10b5-466d-b68e-6b2faec0d356"
+  },
+  {
+    title: "Shakespeare for Kids",
+    img: "https://registration.edfringe.com/resource/image/0263f8a0-96f1-46fa-87e8-d10c5c00f5f6"
+  }
+];
+
+const realShows = [
+  {
+    title: "1 Hour of Insane Magic",
+    img: "https://registration.edfringe.com/resource/image/f950933b-3aaa-4bf4-8b45-9384990bb948",
+    link: "https://www.edfringe.com/tickets/whats-on/1-hour-of-insane-magic"
+  },
+  {
+    title: "1 Hour of Headline Comedy",
+    img: "https://registration.edfringe.com/resource/image/3b5f85b5-250d-462e-888f-691bb449e3cc",
+    link: "https://www.edfringe.com/tickets/whats-on/1-hour-of-headline-comedy"
+  },
+  {
+    title: "Underground Magic",
+    img: "https://registration.edfringe.com/resource/image/2e15afde-d6a8-4637-99f8-6ba040f0e855",
+    link: "https://www.edfringe.com/tickets/whats-on/underground-magic"
+  },
+  {
+    title: "1 Hour of Insanity",
+    img: "https://registration.edfringe.com/resource/image/c06ddbff-5f09-4e5b-8dcc-7cf782f4a8b2",
+    link: "https://www.edfringe.com/tickets/whats-on/1-hour-of-insanity"
+  },
+  {
+    title: "Elliot Bibby: Abracadada",
+    img: "https://registration.edfringe.com/resource/image/9f1def7c-837c-40b0-82d2-4f907f123515",
+    link: "https://www.edfringe.com/tickets/whats-on/elliot-bibby-abracadada"
+  }
+];
+
+function spin() {
+  let counter = 0;
+
+  document.getElementById("ticketBtn").style.display = "none";
+  document.getElementById("showImage").style.display = "none";
+  document.getElementById("reloadBtn").style.display = "none";
+
+  const interval = setInterval(() => {
+    const random = fakeShows[Math.floor(Math.random() * fakeShows.length)];
+
+    document.getElementById("showTitle").innerText = random.title;
+    document.getElementById("showImage").src = random.img;
+    document.getElementById("showImage").style.display = "block";
+
+    counter++;
+
+    if (counter > 25) {
+      clearInterval(interval);
+
+      const chosen =
+        realShows[Math.floor(Math.random() * realShows.length)];
+
+      document.getElementById("showTitle").innerText = chosen.title;
+      document.getElementById("showImage").src = chosen.img;
+
+      document.getElementById("ticketBtn").href = chosen.link;
+      document.getElementById("ticketBtn").style.display = "inline-block";
+
+      document.getElementById("reloadBtn").style.display = "inline-block";
+    }
+  }, 100);
+}
+
+// Play button
+document.getElementById("playBtn").onclick = function () {
+  this.style.display = "none";
+  spin();
+};
+
+// Reload button
+document.getElementById("reloadBtn").onclick = function () {
+  location.reload();
+};
+</script>
+
+</body>
+</html>
