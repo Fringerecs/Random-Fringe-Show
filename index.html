@@ -3,6 +3,8 @@
 <head>
   <title>Random Fringe Show Generator</title>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,39 +15,44 @@
     }
 
     #title {
-      font-size: 32px;
+      font-size: 6vw;
       margin-bottom: 20px;
     }
 
     #showTitle {
-      font-size: 24px;
+      font-size: 5vw;
       margin: 20px;
     }
 
     img {
-      max-width: 300px;
+      max-width: 90%;
+      height: auto;
       display: none;
       margin: 20px auto;
     }
 
+    /* FIX: link is hidden by default properly */
     a {
       display: none;
-      padding: 10px 20px;
+      padding: 12px 20px;
       background: cyan;
       color: black;
       text-decoration: none;
       font-weight: bold;
+      margin-top: 10px;
     }
 
     button {
-      padding: 12px 20px;
-      font-size: 16px;
+      padding: 16px 24px;
+      font-size: 18px;
       margin: 10px;
       cursor: pointer;
       border: none;
       background: cyan;
       color: black;
       font-weight: bold;
+      width: 80%;
+      max-width: 300px;
     }
 
     button:hover {
@@ -64,11 +71,11 @@
 
 <img id="showImage" />
 
-<br><br>
+<br>
 
 <a id="ticketBtn" target="_blank">Get Tickets</a>
 
-<br><br>
+<br>
 
 <button id="reloadBtn" style="display:none;">
 🔁 Bring me to another show
@@ -130,6 +137,8 @@ const realShows = [
   }
 ];
 
+let lastShowIndex = -1;
+
 function spin() {
   let counter = 0;
 
@@ -149,14 +158,22 @@ function spin() {
     if (counter > 25) {
       clearInterval(interval);
 
-      const chosen =
-        realShows[Math.floor(Math.random() * realShows.length)];
+      let chosenIndex;
+
+      do {
+        chosenIndex = Math.floor(Math.random() * realShows.length);
+      } while (chosenIndex === lastShowIndex && realShows.length > 1);
+
+      lastShowIndex = chosenIndex;
+
+      const chosen = realShows[chosenIndex];
 
       document.getElementById("showTitle").innerText = chosen.title;
       document.getElementById("showImage").src = chosen.img;
 
-      document.getElementById("ticketBtn").href = chosen.link;
-      document.getElementById("ticketBtn").style.display = "inline-block";
+      const btn = document.getElementById("ticketBtn");
+      btn.href = chosen.link;
+      btn.style.display = "inline-block";
 
       document.getElementById("reloadBtn").style.display = "inline-block";
     }
